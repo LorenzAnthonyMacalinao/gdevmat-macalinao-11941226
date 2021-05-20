@@ -1,4 +1,4 @@
-/*Lorenz Anthony Macalinao*/
+/*Lorenz Anthony Macalinao - Module 1*/
 void setup()
 {
   size(1280, 720, P3D);
