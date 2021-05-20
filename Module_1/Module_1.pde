@@ -1,3 +1,4 @@
+/*Lorenz Anthony Macalinao*/
 void setup()
 {
   size(1280, 720, P3D);
