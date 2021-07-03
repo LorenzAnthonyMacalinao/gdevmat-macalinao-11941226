@@ -5,7 +5,7 @@ int frameCounter;
 
 void setup()
 {
-  frameRate(120);
+  frameRate(60);
   camera(0, 0, Window.eyeZ, 0, 0, 0, 0, -1, 0);
   size(1080, 720, P3D);
   //number of debris is 100, can be changed here
@@ -42,7 +42,6 @@ void draw()
     }
   }
   
-
   for (int i = 0; i < debris.length; i++)
   {
     if (debris[i].isInside == false)
@@ -53,20 +52,11 @@ void draw()
         debris[i].position.add(direction.normalize());
     }
   }
-  //determine if all debris is inside the whitehole
-  for (int i = 0; i < debris.length; i++)
-  {
-    if (debris[i].isInside == false)
-    {
-      return;
-    }
-  }
-  //no more debris outside the whitehole, or frame count is already 300, start a new catastrophe.
+  
+  //frame count is already 300, start a new catastrophe.
   if(frameCounter++ > 300)
   {
     frameCounter = 0;
     initializeWalkers();
   }
-  
-  
 }

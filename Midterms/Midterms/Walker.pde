@@ -44,7 +44,7 @@ public class Walker
   
   public void render()
   {
-    noStroke();
+    noStroke(); 
     fill(this.r, this.g, this.b);
     circle(this.position.x, this.position.y, this.scale);
   }
