@@ -1,29 +1,32 @@
 Walker[] debris; 
 Walker target;
+int numDebris;
+int frameCounter;
 
 void setup()
 {
-  //frameRate(400);
+  frameRate(120);
   camera(0, 0, Window.eyeZ, 0, 0, 0, 0, -1, 0);
   size(1080, 720, P3D);
+  //number of debris is 100, can be changed here
+  numDebris = 100;
   initializeWalkers();
 }
 
 void initializeWalkers()
 {
-  debris = new Walker [100];
+  debris = new Walker [numDebris];
   for (int i = 0; i < debris.length; i++)
   {
       debris[i] = new Walker(false);
   }
-
   target = new Walker (true);
 }
 
 void draw()
 {
   background(0);
-
+  //render each matter
   for (int i = 0; i < debris.length; i++)
   {
     debris[i].render();
@@ -33,22 +36,24 @@ void draw()
   
   for (int i = 0; i < debris.length; i++)
   {
-    if (Math.abs(target.position.x - debris[i].position.x) < 10 && Math.abs(target.position.y - debris[i].position.y) < 10)
+    if (Math.abs(target.position.x - debris[i].position.x) < 1 && Math.abs(target.position.y - debris[i].position.y) < 1)
     {
-        //debris[i] = new Walker(false);
         debris[i].isInside = true;
     }
   }
   
+
   for (int i = 0; i < debris.length; i++)
   {
     if (debris[i].isInside == false)
     {
+        //compute dir for each matter
         PVector direction = PVector.sub(target.position, debris[i].position);
+        //add normalized dir to each
         debris[i].position.add(direction.normalize());
     }
-
   }
+  //determine if all debris is inside the whitehole
   for (int i = 0; i < debris.length; i++)
   {
     if (debris[i].isInside == false)
@@ -56,5 +61,12 @@ void draw()
       return;
     }
   }
-  initializeWalkers();
+  //no more debris outside the whitehole, or frame count is already 300, start a new catastrophe.
+  if(frameCounter++ > 300)
+  {
+    frameCounter = 0;
+    initializeWalkers();
+  }
+  
+  
 }
